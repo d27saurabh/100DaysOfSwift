@@ -145,3 +145,119 @@ default:
 //1..<5 = 1,2,3,4
 //1...5 = 1,2,3,4,5
 
+for _ in 1...5 {
+    print("play")
+}
+let count = 1...10
+for number in count {
+    print("Number is \(number)")
+}
+//WHILE
+var number1 = 1
+
+while number1 <= 20 {
+    print(number1)
+    number1 += 1
+}
+
+print("Ready or not, here I come!")
+
+//REPEAT
+var number2 = 1
+
+repeat {
+    print(number2)
+    number2 += 1
+} while number2 <= 20
+
+print("Ready or not, here I come!")
+
+//existing loop
+var countDown = 10
+while countDown >= 0 {
+    print(countDown)
+
+    if countDown == 4 {
+        print("I'm bored. Let's go now!")
+        break
+    }
+
+    countDown -= 1
+}
+//breaking multiple loops -
+outerLoop: for i in 1...10 {
+    for j in 1...10 {
+        let product = i * j
+        print ("\(i) * \(j) is \(product)")
+
+        if product == 50 {
+            print("It's a bullseye!")
+            break outerLoop
+        }
+    }
+}
+//continue - skips the further execution
+for i in 1...10 {
+    if i % 2 == 1 {
+        continue
+    }
+
+    print(i)
+}
+
+func writeToLog(message: String) -> Bool {
+    if message != "" {
+        print("Log: \(message)")
+        return true
+    } else {
+        return false
+    }
+}
+
+//default parameters
+func greet(_ person: String, nicely: Bool = true) {
+    if nicely == true {
+        print("Hello, \(person)!")
+    } else {
+        print("Oh no, it's \(person) again...")
+    }
+}
+greet("Taylor")
+greet("Taylor", nicely: false)
+
+//variadic functions - accept any number of parameters
+print("Haters", "gonna", "hate")
+func squared(numbers: Int...) {
+    for number in numbers {
+        print("\(number) squared is \(number * number)")
+    }
+}
+squared(numbers: 1, 2, 3, 4)
+squared(numbers: 3, 4, 5)
+
+//writing throwing functions
+enum PasswordError: Error {
+    case obvious
+}
+
+func checkPassword(_ password: String) throws -> Bool {
+    if password == "password" {
+       throw PasswordError.obvious
+    }
+    return true
+}
+
+//running throwing functions
+do {
+    try checkPassword("password")
+    print("good password to use")
+} catch {
+    print("You can't use that password")
+}
+
+//inout fucntion parameters
+func doubleInPlace(number: inout Int) {
+    number *= 2
+}
+var myNum = 10
+doubleInPlace(number: &myNum)

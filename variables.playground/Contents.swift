@@ -261,3 +261,112 @@ func doubleInPlace(number: inout Int) {
 }
 var myNum = 10
 doubleInPlace(number: &myNum)
+
+//basic closures
+let driving = { (place: String) -> String in
+    return "I am driving in my car and going to \(place)"
+}
+
+let message = driving("London")
+print(message)
+
+//using closures as function parameters
+let eating = {
+    print("I am eating mangoes")
+}
+ 
+func dailyActivity(action: () -> Void) {
+    print("We are doing something")
+    action()
+    print("next action awaited")
+}
+func dailyDoseOfInternet(area : String, news hotNews: () -> Void) {
+     print("Internet presents")
+    hotNews()
+}
+
+let OGHR = {
+     print("og won against hell raisers 2-0")
+}
+ 
+dailyActivity(action: eating)
+
+//trailing closures
+dailyActivity {
+    print("I am playing guitar")
+}
+
+dailyDoseOfInternet(area: "Gaming", news: OGHR)
+
+dailyDoseOfInternet(area: "Gaming") {
+    print("og won against hell raisers 2-0")
+}
+
+//using closure as parameters when they accept parameters and return
+
+
+func travel(action: (String) -> String) {
+    print("I'm getting ready to go.")
+    let description = action("London")
+    print(description)
+    print("I arrived!")
+}
+
+travel { (place: String) -> String in
+     return "I'm going to \(place) in my car"
+}
+
+//shorthand parameter name
+travel {
+    "I'm going to \($0) in my car"
+}
+
+//example 2
+func manipulate(numbers: [Int], using algorithm: (Int) -> Int) {
+    for number in numbers {
+        let result = algorithm(number)
+        print("Manipulating \(number) produced \(result)")
+    }
+}
+manipulate(numbers: [1, 2, 3]) { abc in
+    return abc * abc
+}
+
+//example 3
+func playSong(_ name: String, notes: () -> String) {
+    print("I'm going to play \(name).")
+    let playedNotes = notes()
+    print(playedNotes)
+}
+playSong("Mary Had a Little Lamb") {
+    return "EDCDEEEDDDEGG"
+}
+
+//closures with multiple parameter
+
+func tournament(details: (String, Int) -> String) {
+    let result = details("OG vs HR", 20)
+    print(result)
+}
+
+tournament {
+    return "Score for match \($0) is \($1) "
+}
+
+//returning closures from functions
+func matchResult() -> (String) -> Void {
+    var numOfMatch = 1
+    return {
+        print("\(numOfMatch) match result is \($0)")
+        numOfMatch += 1
+    }
+}
+ 
+let result = matchResult()
+result("OG won")
+result("OG won")
+result("OG won")
+let result2: Void = matchResult()("OG won")
+
+
+

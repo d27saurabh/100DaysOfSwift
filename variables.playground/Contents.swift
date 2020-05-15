@@ -627,3 +627,107 @@ protocol HasAge {
     var age: Int { get set }
     mutating func celebrateBirthday()
 }
+
+
+//optionals and unwrapping optional
+var name: String? = nil
+if let unwrapped = name {
+    print("\(unwrapped.count) letters")
+} else {
+    print("missing name.")
+}
+
+func greet(name: String?) {
+    guard let unwrapped = name else {
+        print("You didn't provide a name!")
+        return
+    }
+    
+    print("hello, \(unwrapped)")
+}
+
+var someoneName: String? = nil
+greet(name: someoneName)
+
+//forced unwrapping
+let str27 = "5"
+let num = Int(str27)!
+
+//implicitly unwrapped optional
+let age5: Int! = nil
+
+//nil coalescing
+var captain: String? = "Kathryn Janeway"
+let name5 = captain ?? "Anonymous"
+
+let distanceRan: Double? = 0.5
+let distance: Double = distanceRan ?? 0
+
+let names = ["John", "Paul", "George", "Ringo"]
+let beatle = names.first?.uppercased()
+
+//optional chaining
+let songs: [String]? = [String]()
+let finalSong = songs?.last?.uppercased()
+
+//optional try
+//we have this code when we were talking aboput the throwing fucntions
+//enum PasswordError: Error {
+//    case obvious
+//}
+//
+//func checkPassword(_ password: String) throws -> Bool {
+//    if password == "password" {
+//        throw PasswordError.obvious
+//    }
+//
+//    return true
+//}
+//
+//do {
+//    try checkPassword("password")
+//    print("That password is good!")
+//} catch {
+//    print("You can't use that password.")
+//}
+
+if let result = try? checkPassword("password") {
+    print("result was \(result) ")
+} else {
+    print("D'oh.")
+}
+
+try! checkPassword("asdklf")
+print("OK!")
+
+struct Person67 {
+    var id: String
+
+    init?(id: String) {
+        if id.count == 9 {
+            self.id = id
+        } else {
+            return nil
+        }
+    }
+}
+ var sadf = Bool("false")
+
+//type caseting
+ class Animal { }
+ class Fish: Animal { }
+
+ class Doggy: Animal {
+     func makeNoise() {
+         print("Woof!")
+     }
+ }
+let pets = [Fish(), Doggy(), Fish(), Doggy()]
+
+for pet in pets {
+    if let dog = pet as? Doggy {
+        dog.makeNoise()
+    }
+}
+
+

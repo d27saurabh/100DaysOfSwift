@@ -369,4 +369,147 @@ result("OG won")
 let result2: Void = matchResult()("OG won")
 
 
+//structs
+struct Sport {
+    var name: String
+    var isOlympicSport: Bool
+    
+    //computed properties. constants (let) cannot be computed properties. So always use var
+    var olympicStatus: String {
+        if isOlympicSport {
+            return "\(name) is an Olympic sport"
+        } else {
+            return "\(name) is not an Olympic sport"
+        }
+    }
+}
 
+//var tennis = Sport(name: "Tennis")
+//print(tennis.name)
+//tennis.name = "Lawn tennis"
+//print(tennis.name)
+
+let chessBoxing = Sport(name: "ChessBoxing", isOlympicSport: false)
+print(chessBoxing.olympicStatus)
+
+//porperty observers
+struct Game {
+    
+    //cannot use didset with let has to use var
+    var score: Int {
+        didSet {
+            print("Your score is now \(score).")
+        }
+    }
+}
+
+//methods
+struct City {
+    var population: Int
+
+    func collectTaxes() -> Int {
+        return population * 1000
+    }
+}
+
+let london = City(population: 9_000_000)
+london.collectTaxes()
+
+//mutating methods
+struct Person {
+    var name: String
+
+    mutating func makeAnonymous() {
+        name = "Anonymous"
+    }
+}
+
+var person = Person(name: "Ed")
+person.makeAnonymous()
+
+let cardGames = ["Poker", "Blackjack", "Whist"]
+cardGames.firstIndex(of: "Whist")
+cardGames.contains("whist")
+
+//initializers
+struct User {
+    var username: String
+    
+    init() {
+        username = "Anonymous"
+        print("Creating a new user!")
+    }
+}
+
+var user = User()
+user.username = "Saurabh"
+print(user.username)
+
+//self reference
+struct Conference {
+    var name: String
+    var location: String
+    init(name: String, location: String) {
+        self.name = name
+        self.location = location
+    }
+}
+let wwdc = Conference(name: "WWDC", location: "San Jose")
+
+struct Cottage {
+    var rooms: Int
+    var rating = 5
+    init(rooms: Int) {
+        self.rooms = rooms
+    }
+}
+let bailbrookHouse = Cottage(rooms: 4)
+
+//lazy properties - for perfoemance optimizations
+struct FamilyTree {
+    init() {
+        print("Creating family tree!")
+    }
+}
+struct Person1 {
+    var name: String
+    lazy var familyTree = FamilyTree()
+
+    init(name: String) {
+        self.name = name
+    }
+}
+
+var ed = Person1(name: "Ed")
+ed.familyTree
+
+//static
+
+struct Student {
+    static var classSize = 0
+    var name: String
+
+    init(name: String) {
+        self.name = name
+        Student.classSize += 1
+    }
+}
+let ed1 = Student(name: "Ed")
+let taylor = Student(name: "Taylor")
+print(Student.classSize)
+
+//access - private
+struct Person3 {
+    private var id: String
+
+    init(id: String) {
+        self.id = id
+    }
+
+    func identify() -> String {
+        return "My social security number is \(id)"
+    }
+}
+let ed2 = Person3(id: "12345")
+// ed2.id - inaccessible due to private protection level
+ed2.identify()

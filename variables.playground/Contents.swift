@@ -513,3 +513,117 @@ struct Person3 {
 let ed2 = Person3(id: "12345")
 // ed2.id - inaccessible due to private protection level
 ed2.identify()
+
+//class inheritance
+//method overiding
+class Dog {
+    var name: String
+    var breed: String
+
+    init(name: String, breed: String) {
+        self.name = name
+        self.breed = breed
+    }
+    
+    func makeNoise() {
+        print("Woof!")
+    }
+}
+class Poodle: Dog {
+    init(name: String) {
+        super.init(name: name, breed: "Poodle")
+    }
+    override func makeNoise() {
+        print("Yip!")
+    }
+}
+
+let poppy = Poodle(name: "beetles")
+poppy.makeNoise()
+//final keyword - cannot inherit the final class
+//protocol
+protocol Washable {
+    var dirtinessLevel: Int { get set }
+}
+protocol Climbable {
+    var height: Double { get }
+    var gradient: Int { get }
+}
+
+//only set is not allowed
+
+
+//protocol inheritance
+protocol Payable {
+    func calculateWages() -> Int
+}
+
+protocol NeedsTraining {
+    func study()
+}
+
+protocol HasVacation {
+    func takeVacation(days: Int)
+}
+protocol Employee: Payable, NeedsTraining, HasVacation { }
+
+//extention
+extension Int {
+    func squared() -> Int {
+        return self * self
+    }
+}
+
+let number = 8
+number.squared()
+
+extension Int {
+    var isEven: Bool {
+        return self % 2 == 0
+    }
+}
+
+extension String {
+    var isLong: Bool {
+        return count > 25
+    }
+}
+
+//protocol extension
+let pythons = ["Eric", "Graham", "John", "Michael", "Terry", "Terry"]
+let beatles1 = Set(["John", "Paul", "George", "Ringo"])
+
+extension Collection {
+    func summarize() {
+        print("There are \(count) of us:")
+
+        for name in self {
+            print(name)
+        }
+    }
+}
+
+pythons.summarize()
+beatles1.summarize()
+
+//protocol-oriented programming
+protocol Identifiable {
+    var id: String { get set }
+    func identify()
+}
+extension Identifiable {
+    func identify() {
+        print("My ID is \(id).")
+    }
+}
+struct User1: Identifiable {
+    var id: String
+}
+
+let twostraws = User1(id: "twostraws")
+twostraws.identify()
+
+protocol HasAge {
+    var age: Int { get set }
+    mutating func celebrateBirthday()
+}

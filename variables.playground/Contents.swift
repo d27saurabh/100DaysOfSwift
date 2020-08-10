@@ -755,3 +755,25 @@ for pet in pets {
 }
 
 
+class Something {
+    var shown : Bool
+    
+    init() {
+        self.shown = false
+    }
+    func shownTrue() {
+        shown = true
+    }
+}
+
+let something1 = Something()
+let something2 = Something()
+something1.shownTrue()
+something1.shown
+something2.shown
+
+
+
+
+
+

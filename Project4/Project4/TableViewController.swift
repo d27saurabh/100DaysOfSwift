@@ -8,7 +8,7 @@
 
 import UIKit
 
-public var websites = ["apple.com", "hackingwithswift.com"]
+public var websites = ["apple.com", "hackingwithswift.com", "youtube.com", "accounts.google.com"]
 
 class TableViewController: UITableViewController {
 

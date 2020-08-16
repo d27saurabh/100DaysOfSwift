@@ -46,7 +46,7 @@ class ViewController: UITableViewController {
     
     //number of rows in section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allWords.count
+        return usedWords.count
     }
     
     // cell for row at

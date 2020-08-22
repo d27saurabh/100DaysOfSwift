@@ -13,6 +13,8 @@ class ViewController: UITableViewController {
     // MARK: - Properties
     var shoppingList = [String]()
     
+    
+    // MARK: - Life cycles methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -20,17 +22,52 @@ class ViewController: UITableViewController {
         overrideUserInterfaceStyle = .dark
         
         //add '+' button to the right of the navigation bar
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItemsToList))
+        let addUIBarButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItemsToList))
+        
+        // add share button to the right of the navigation bar
+        let shareUIBarbutton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareList))
+        
+        //add + and share to the right of the navigation bar
+        navigationItem.rightBarButtonItems = [addUIBarButton, shareUIBarbutton]
+        
+        //add Clear button to the left of the navigation bar
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(clearList))
         
         //set title
         title = "Shopping List"
         
     }
     
+    // MARK: - UI bar button methods
+    
     // + button method - add items to the table view
     @objc func addItemsToList() {
         showAlertToAddItem()
     }
+    
+    @objc func shareList() {
+        
+        //add all the items from the shopping list array to string
+        let list = shoppingList.joined(separator: "\n")
+        
+        //share the list
+        let activityViewController = UIActivityViewController(activityItems: [list], applicationActivities: [])
+        activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(activityViewController, animated: true)
+    }
+    
+    // Clear button method - clears the shopping list
+    @objc func clearList() {
+        //remove all items from the shopping list
+        shoppingList.removeAll(keepingCapacity: true)
+        
+        //update the table view
+        tableView.reloadData()
+    }
+    
+    
+    
+    // MARK: - Alert to add item methods
     
     //alert to add item
     func showAlertToAddItem() {
@@ -65,6 +102,8 @@ class ViewController: UITableViewController {
         tableView.insertRows(at: [indexPath], with: .fade)
         
     }
+    
+    // MARK: - Table view methods
     
     // table view method to get number of rows in section
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

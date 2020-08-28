@@ -136,6 +136,11 @@ class ViewController: UIViewController {
                 let letterButton = UIButton(type: .system)
                 letterButton.titleLabel?.font = UIFont.systemFont(ofSize: 36)
                 letterButton.setTitle("WWW", for: .normal)
+                
+                //challenge 1:
+                letterButton.layer.borderWidth = 1
+                letterButton.layer.borderColor = UIColor.lightGray.cgColor
+                
                 letterButton.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
                 
                 
@@ -173,13 +178,33 @@ class ViewController: UIViewController {
             answersLabel.text = splitAnswers?.joined(separator: "\n")
             
             currentAnswer.text = ""
-            score += 1
+            score += 2
             
-            if score % 7 == 0 {
+            //challenge 3:
+            var allAnswersGuessed = true
+            for btn in letterButtons {
+                if !btn.isHidden {
+                    allAnswersGuessed = false
+                    break
+                }
+            }
+            if allAnswersGuessed {
                 let ac = UIAlertController(title: "Well done!", message: "Are you ready for next level>", preferredStyle: .alert)
                 ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
                 present(ac, animated: true)
             }
+        } else {
+            
+            //challenge 2:
+            let ac = UIAlertController(title: "Incorrect attempt", message: "You can do better", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Try Again", style: .cancel, handler: { (_) in
+                
+                //challenge 3:
+                self.score > 0 ? self.score -= 1 : nil
+                
+                self.clearAttempt()
+            }))
+            present(ac, animated: true)
         }
     }
     
@@ -195,6 +220,10 @@ class ViewController: UIViewController {
     }
     
     @objc func clearTapped(_ sender: UIButton) {
+        clearAttempt()
+    }
+    
+    func clearAttempt() {
         currentAnswer.text = ""
         
         for btn in activatedButtons {

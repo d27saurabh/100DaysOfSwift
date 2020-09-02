@@ -152,14 +152,14 @@ print(firstCard == secondCard ? "Cards are the same" : "Cards are different")
 
 let weather = "sunny"
 switch weather {
-    case "rain":
+case "rain":
     print("Bring an umbrella")
 case "snow":
     print("Wrap an warm")
 case "sunny":
     print("Wear sunscreen")
     fallthrough
-    case "windy":
+case "windy":
     print("its windy")
 default:
     print("Enjoy your day")
@@ -200,12 +200,12 @@ print("Ready or not, here I come!")
 var countDown = 10
 while countDown >= 0 {
     print(countDown)
-
+    
     if countDown == 4 {
         print("I'm bored. Let's go now!")
         break
     }
-
+    
     countDown -= 1
 }
 //breaking multiple loops -
@@ -213,7 +213,7 @@ outerLoop: for i in 1...10 {
     for j in 1...10 {
         let product = i * j
         print ("\(i) * \(j) is \(product)")
-
+        
         if product == 50 {
             print("It's a bullseye!")
             break outerLoop
@@ -225,7 +225,7 @@ for i in 1...10 {
     if i % 2 == 1 {
         continue
     }
-
+    
     print(i)
 }
 
@@ -266,7 +266,7 @@ enum PasswordError: Error {
 
 func checkPassword(_ password: String) throws -> Bool {
     if password == "password" {
-       throw PasswordError.obvious
+        throw PasswordError.obvious
     }
     return true
 }
@@ -298,21 +298,21 @@ print(message)
 let eating = {
     print("I am eating mangoes")
 }
- 
+
 func dailyActivity(action: () -> Void) {
     print("We are doing something")
     action()
     print("next action awaited")
 }
 func dailyDoseOfInternet(area : String, news hotNews: () -> Void) {
-     print("Internet presents")
+    print("Internet presents")
     hotNews()
 }
 
 let OGHR = {
-     print("og won against hell raisers 2-0")
+    print("og won against hell raisers 2-0")
 }
- 
+
 dailyActivity(action: eating)
 
 //trailing closures
@@ -337,7 +337,7 @@ func travel(action: (String) -> String) {
 }
 
 travel { (place: String) -> String in
-     return "I'm going to \(place) in my car"
+    return "I'm going to \(place) in my car"
 }
 
 //shorthand parameter name
@@ -385,7 +385,7 @@ func matchResult() -> (String) -> Void {
         numOfMatch += 1
     }
 }
- 
+
 let result = matchResult()
 result("OG won")
 result("OG won")
@@ -430,7 +430,7 @@ struct Game {
 //methods
 struct City {
     var population: Int
-
+    
     func collectTaxes() -> Int {
         return population * 1000
     }
@@ -442,7 +442,7 @@ london.collectTaxes()
 //mutating methods
 struct Person {
     var name: String
-
+    
     mutating func makeAnonymous() {
         name = "Anonymous"
     }
@@ -498,7 +498,7 @@ struct FamilyTree {
 struct Person1 {
     var name: String
     lazy var familyTree = FamilyTree()
-
+    
     init(name: String) {
         self.name = name
     }
@@ -512,7 +512,7 @@ ed.familyTree
 struct Student {
     static var classSize = 0
     var name: String
-
+    
     init(name: String) {
         self.name = name
         Student.classSize += 1
@@ -525,11 +525,11 @@ print(Student.classSize)
 //access - private
 struct Person3 {
     private var id: String
-
+    
     init(id: String) {
         self.id = id
     }
-
+    
     func identify() -> String {
         return "My social security number is \(id)"
     }
@@ -543,7 +543,7 @@ ed2.identify()
 class Dog {
     var name: String
     var breed: String
-
+    
     init(name: String, breed: String) {
         self.name = name
         self.breed = breed
@@ -620,7 +620,7 @@ let beatles1 = Set(["John", "Paul", "George", "Ringo"])
 extension Collection {
     func summarize() {
         print("There are \(count) of us:")
-
+        
         for name in self {
             print(name)
         }
@@ -726,7 +726,7 @@ print("OK!")
 
 struct Person67 {
     var id: String
-
+    
     init?(id: String) {
         if id.count == 9 {
             self.id = id
@@ -735,17 +735,17 @@ struct Person67 {
         }
     }
 }
- var sadf = Bool("false")
+var sadf = Bool("false")
 
 //type caseting
- class Animal { }
- class Fish: Animal { }
+class Animal { }
+class Fish: Animal { }
 
- class Doggy: Animal {
-     func makeNoise() {
-         print("Woof!")
-     }
- }
+class Doggy: Animal {
+    func makeNoise() {
+        print("Woof!")
+    }
+}
 let pets = [Fish(), Doggy(), Fish(), Doggy()]
 
 for pet in pets {
@@ -771,6 +771,44 @@ let something2 = Something()
 something1.shownTrue()
 something1.shown
 something2.shown
+
+//test
+var numberHashMap = [Int: Bool]()
+
+numberHashMap[20]
+
+//if let exists = numberHashMap[20], exists {
+//    print("number hai")
+//} else {
+//    print("number nahi hai")
+//}
+
+
+
+
+func twoNumberSum(array: [Int], targetSum: Int) -> [Int] {
+    var numberHashMap = [Int: Bool]()
+    
+    for number in array {
+        let potentialMatch = targetSum - number
+        print(potentialMatch)
+        if let exists = numberHashMap[potentialMatch] {
+            print(exists)
+            return [potentialMatch, number]
+        } else {
+            print("\(potentialMatch): nahi hai")
+            numberHashMap[number] = true
+        }
+        print(numberHashMap)
+    }
+    return []
+}
+
+print(twoNumberSum(array: [3, 5, -4, 8, 11, 1, -1, 6], targetSum: 10))
+
+
+
+
 
 
 

@@ -15,9 +15,14 @@ class ViewController: UITableViewController {
     var filteredPetitions = [Petition]()
     var filterBarButton : UIBarButtonItem?
     var clearBarButton: UIBarButtonItem?
+    var tabBarItemNum = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if navigationController?.tabBarItem.tag == 1 {
+            tabBarItemNum = 1
+        }
         
         let credits = UIBarButtonItem(title: "Credits", style: .plain, target: self, action: #selector(showCredits))
         navigationItem.leftBarButtonItem = credits
@@ -33,7 +38,7 @@ class ViewController: UITableViewController {
     @objc func fetchJSON() {
         let urlString: String
         
-        if navigationController?.tabBarItem.tag == 0 {
+        if tabBarItemNum == 0 {
             urlString = "https://www.hackingwithswift.com/samples/petitions-1.json"
         } else {
             urlString = "https://www.hackingwithswift.com/samples/petitions-2.json"

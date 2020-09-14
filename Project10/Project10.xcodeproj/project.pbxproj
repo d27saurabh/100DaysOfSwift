@@ -14,6 +14,7 @@
 		096B5668250C7FD600A0D1CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 096B5667250C7FD600A0D1CB /* Assets.xcassets */; };
 		096B566B250C7FD600A0D1CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 096B5669250C7FD600A0D1CB /* LaunchScreen.storyboard */; };
 		096B5677250C81E300A0D1CB /* PersonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096B5676250C81E300A0D1CB /* PersonCell.swift */; };
+		09FAF8E6250F1F8600682D37 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FAF8E5250F1F8600682D37 /* Person.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		096B566A250C7FD600A0D1CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		096B566C250C7FD600A0D1CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		096B5676250C81E300A0D1CB /* PersonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonCell.swift; sourceTree = "<group>"; };
+		09FAF8E5250F1F8600682D37 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				096B5676250C81E300A0D1CB /* PersonCell.swift */,
 				096B5660250C7FD400A0D1CB /* SceneDelegate.swift */,
 				096B5662250C7FD400A0D1CB /* ViewController.swift */,
+				09FAF8E5250F1F8600682D37 /* Person.swift */,
 			);
 			path = Project10;
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09FAF8E6250F1F8600682D37 /* Person.swift in Sources */,
 				096B5663250C7FD400A0D1CB /* ViewController.swift in Sources */,
 				096B565F250C7FD400A0D1CB /* AppDelegate.swift in Sources */,
 				096B5677250C81E300A0D1CB /* PersonCell.swift in Sources */,

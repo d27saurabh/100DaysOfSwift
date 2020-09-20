@@ -14,6 +14,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabel: SKLabelNode!
     var editLabel: SKLabelNode!
     
+    //challenge 1
+    let ballColor = ["ballRed", "ballCyan", "ballBlue", "ballYellow", "ballGreen", "ballGrey", "ballPurple"]
+    
+    var ballLimit = 5
+    
     var score = 0 {
         didSet {
             scoreLabel.text = "Score: \(score)"
@@ -77,19 +82,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 let box = SKSpriteNode(color: UIColor(red: CGFloat.random(in: 0...1), green: CGFloat.random(in: 0...1), blue: CGFloat.random(in: 0...1), alpha: 1), size: size)
                 box.zRotation = CGFloat.random(in: 0...3)
                 box.position = location
-                
+                box.name = "box"
                 box.physicsBody = SKPhysicsBody(rectangleOf: box.size)
                 box.physicsBody?.isDynamic = false
                 
                 addChild(box)
             } else {
-                let ball = SKSpriteNode(imageNamed: "ballRed")
-                ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
-                ball.physicsBody?.restitution = 0.4
-                ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask ?? 0
-                ball.position = location
-                ball.name = "ball"
-                addChild(ball)
+                if ballLimit > 0 {
+                    let ball = SKSpriteNode(imageNamed: ballColor.randomElement()!)
+                    ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
+                    ball.physicsBody?.restitution = 0.4
+                    ball.physicsBody!.contactTestBitMask = ball.physicsBody!.collisionBitMask ?? 0
+                    //challenge 2
+                    ball.position = CGPoint(x: location.x, y: 650.00)
+                    ball.name = "ball"
+                    addChild(ball)
+                    ballLimit -= 1
+                } else {
+                    scoreLabel.text = "You ran out of balls"
+                }
             }
         }
     }
@@ -135,9 +146,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if object.name == "good" {
             destroy(ball: ball)
             score += 1
+            ballLimit += 1
         } else if object.name == "bad" {
             destroy(ball: ball)
             score -= 1
+        } else if object.name == "box" {
+            //challenge 3
+            object.removeFromParent()
         }
     }
     

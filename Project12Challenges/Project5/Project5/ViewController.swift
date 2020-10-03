@@ -37,9 +37,6 @@ class ViewController: UITableViewController {
         if allWords.isEmpty {
             allWords = ["silkworm"]
         }
-        
-        
-        
         startGame()
     }
     

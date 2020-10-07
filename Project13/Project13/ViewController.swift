@@ -11,9 +11,14 @@ import UIKit
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var intensity: UISlider!
+    @IBOutlet var radius: UISlider!
+    @IBOutlet var scale: UISlider!
+    @IBOutlet var center: UISlider!
+    
     var currentImage: UIImage!
     
     var context: CIContext!
+    @IBOutlet var currentFilterLabel: UIButton!
     var currentFilter: CIFilter!
     
     override func viewDidLoad() {
@@ -40,7 +45,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         let beginImage = CIImage(image: currentImage)
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
-        applyProcessing()
+        applyProcessing(tag: nil)
     }
     
     @IBAction func changeFilter(_ sender: UIButton) {
@@ -63,47 +68,61 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func setFilter(action: UIAlertAction) {
-        //valid image check
-        guard currentImage != nil else { return }
-        
         //read the title
         guard let actionTitle = action.title else { return }
         
+        //valid image check
+        guard currentImage != nil else { return }
+        //challenge 2
+        currentFilterLabel.setTitle(actionTitle, for: .normal)
         currentFilter = CIFilter(name: actionTitle)
         
         let beginImage = CIImage(image: currentImage)
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
         
-        applyProcessing()
+        applyProcessing(tag: nil)
     }
     
     @IBAction func save(_ sender: Any) {
-        guard let image = imageView.image else { return }
+        guard let image = imageView.image else {
+            //challenge 1
+            let ac = UIAlertController(title: "No image found", message: "Pick a image from photos to save", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+            return
+        }
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contectInfo:)), nil)
     }
     
-    @IBAction func intensityChanged(_ sender: Any) {
-        applyProcessing()
+    @IBAction func intensityChanged(_ sender: UISlider) {
+        applyProcessing(tag: sender.tag)
     }
     
-    func applyProcessing() {
+    func applyProcessing(tag: Int?) {
         let inputKeys = currentFilter.inputKeys
         
-        if inputKeys.contains(kCIInputIntensityKey) {
-            currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
-            
+        //challenge three
+        switch  tag {
+        case 0:
+            if inputKeys.contains(kCIInputCenterKey) {
+                currentFilter.setValue(CIVector(x: currentImage.size.width / 2, y: currentImage.size.height / 2), forKey: kCIInputCenterKey)
+            }
+        case 1:
+            if inputKeys.contains(kCIInputScaleKey) {
+                currentFilter.setValue(scale.value * 10, forKey: kCIInputScaleKey)
+            }
+        case 2:
+            if inputKeys.contains(kCIInputRadiusKey) {
+                currentFilter.setValue(radius.value * 200, forKey: kCIInputRadiusKey)
+            }
+        case 3:
+            if inputKeys.contains(kCIInputIntensityKey) {
+                currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
+            }
+        default:
+            print("default case- do nothing")
         }
-        if inputKeys.contains(kCIInputRadiusKey) {
-            currentFilter.setValue(intensity.value * 200, forKey: kCIInputRadiusKey)
-            
-        }
-        if inputKeys.contains(kCIInputScaleKey) {
-            currentFilter.setValue(intensity.value * 10, forKey: kCIInputScaleKey)
-            
-        }
-        if inputKeys.contains(kCIInputCenterKey) {
-            currentFilter.setValue(CIVector(x: currentImage.size.width / 2, y: currentImage.size.height / 2), forKey: kCIInputCenterKey)
-        }
+        
         
         if let cgimg = context.createCGImage(currentFilter.outputImage!, from: currentFilter.outputImage!.extent) {
             let processedImage = UIImage(cgImage: cgimg)
